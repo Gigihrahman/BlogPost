@@ -1,5 +1,6 @@
 import axios from "axios";
 
+export const data = process.env.BASE_URL;
 export const axiosInstance = axios.create({
-  baseURL: "https://joysomecream-us.backendless.app/api",
+  baseURL: data,
 });
