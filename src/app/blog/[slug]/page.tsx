@@ -79,35 +79,7 @@ const BlogPostPage = async ({
 
         {/* Post Content */}
         <div className="prose prose-slate dark:prose-invert max-w-none mb-8">
-          {post.content.split("\n").map((paragraph, index) => {
-            if (paragraph.startsWith("# ")) {
-              return (
-                <h1 key={index} className="text-3xl font-bold mt-8 mb-4">
-                  {paragraph.substring(2)}
-                </h1>
-              );
-            } else if (paragraph.startsWith("## ")) {
-              return (
-                <h2 key={index} className="text-2xl font-bold mt-6 mb-3">
-                  {paragraph.substring(3)}
-                </h2>
-              );
-            } else if (paragraph.startsWith("### ")) {
-              return (
-                <h3 key={index} className="text-xl font-bold mt-5 mb-2">
-                  {paragraph.substring(4)}
-                </h3>
-              );
-            } else if (paragraph.trim() === "") {
-              return <br key={index} />;
-            } else {
-              return (
-                <p key={index} className="mb-4">
-                  {paragraph}
-                </p>
-              );
-            }
-          })}
+          <p>{post.content}</p>
         </div>
 
         {/* Share Buttons */}
