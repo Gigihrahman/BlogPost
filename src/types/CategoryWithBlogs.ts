@@ -1,3 +1,4 @@
+import type { Author } from "@/types/Author";
 import { Blog } from "@/types/Blogs";
 
 export interface CategoryWithBlogs {
@@ -6,4 +7,6 @@ export interface CategoryWithBlogs {
   description: string;
   slug: string;
   blogs: Blog[];
+  views: number;
+  author: Author;
 }

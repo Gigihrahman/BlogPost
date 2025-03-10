@@ -1,89 +1,108 @@
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import type { Blog } from "@/types/Blogs";
 
-const Hero = () => {
+interface FeaturedPostsProps {
+  posts: Blog[];
+}
+
+const FeaturedPosts: React.FC<FeaturedPostsProps> = ({ posts }) => {
+  if (!posts || posts.length < 3) {
+    return null; // Don't render if we don't have enough posts
+  }
+
+  const mainPost = posts[0];
+  const sidePosts = posts.slice(1, 3);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {/* Featured Post - Left Side */}
-      <div className="md:col-span-2 relative overflow-hidden rounded-lg h-[400px]">
-        {/* <Link href="/blog/kitten-care"> */}
-        <div className="relative h-full w-full">
-          <Image
-            src="/next.svg"
-            alt="Person with pink hair in a forest"
-            layout="fill"
-            className="object-cover brightness-75"
-            priority
-          />
-          <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-            <span className="bg-white text-black px-3 py-1 text-sm font-medium mb-3 w-fit backdrop-blur-sm bg-opacity-40 rounded-md">
-              News
-            </span>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2 backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-              10 steps to prepare your home for a Kitten-about Kitten Care
-            </h2>
-            <p className="text-sm backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-              August 01, 2016
-            </p>
-          </div>
-        </div>
-        {/* </Link> */}
-      </div>
+    <section aria-labelledby="featured-posts-heading" className="py-8">
+      <h2 id="featured-posts-heading" className="text-2xl font-bold mb-4">
+        Popular Posts
+      </h2>
 
-      {/* Right Side Posts */}
-      <div className="flex flex-col gap-4">
-        {/* Top Right Post */}
-        <div className="relative overflow-hidden rounded-lg h-[190px]">
-          {/* <Link href="/blog/smartphones-2016"> */}
-          <div className="relative h-full w-full">
-            <Image
-              src="/window.svg"
-              alt="Forest path"
-              layout="fill"
-              className="object-cover brightness-75"
-            />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-              <span className="bg-white text-black px-3 py-1 text-sm font-medium mb-3 w-fit backdrop-blur-sm bg-opacity-40 rounded-md">
-                Travel
-              </span>
-              <h2 className="text-lg md:text-xl font-bold mb-2 backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-                The Best smartphones you can purchase right now in 2016
-              </h2>
-              <p className="text-sm backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-                July 01, 2016
-              </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        {/* Featured Post - Left Side */}
+        <div className="md:col-span-2 relative overflow-hidden rounded-lg h-[400px] group transition-all duration-300 shadow-md hover:shadow-xl">
+          <Link
+            href={`/blog/${mainPost.slug}`}
+            className="block h-full focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-opacity-50 rounded-lg"
+            aria-labelledby="main-post-title"
+          >
+            <div className="relative h-full w-full">
+              <Image
+                src={mainPost.thumbnail}
+                alt={mainPost.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105 brightness-75"
+                priority
+              />
+              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white bg-gradient-to-t from-black/60 to-transparent">
+                <span className="bg-white/80 text-black px-3 py-1 text-sm font-medium mb-3 w-fit rounded-md">
+                  {mainPost.category.name || "Featured"}
+                </span>
+                <h3
+                  id="main-post-title"
+                  className="text-2xl md:text-3xl font-bold mb-2 text-shadow"
+                >
+                  {mainPost.title}
+                </h3>
+                <div className="flex items-center justify-between w-full">
+                  <span className="text-sm">{mainPost.author?.name}</span>
+                  <time dateTime={mainPost.created} className="text-sm">
+                    {mainPost.created}
+                  </time>
+                </div>
+              </div>
             </div>
-          </div>
-          {/* </Link> */}
+          </Link>
         </div>
 
-        {/* Bottom Right Post */}
-        <div className="relative overflow-hidden rounded-lg h-[190px]">
-          {/* <Link href="/blog/travel-100-places"> */}
-          <div className="relative h-full w-full">
-            <Image
-              src="/file.svg"
-              alt="Person in white t-shirt"
-              layout="fill"
-              className="object-cover brightness-75"
-            />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-              <span className="bg-white text-black px-3 py-1 text-sm font-medium mb-3 w-fit backdrop-blur-sm bg-opacity-40 rounded-md">
-                Fashion
-              </span>
-              <h2 className="text-lg md:text-xl font-bold mb-2 backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-                Catch the travel bug and visit 100 places Before You Die
-              </h2>
-              <p className="text-sm backdrop-blur-sm bg-opacity-40 rounded-md p-2">
-                June 08, 2016
-              </p>
+        {/* Right Side Posts */}
+        <div className="flex flex-col gap-4 md:gap-6">
+          {sidePosts.map((post, index) => (
+            <div
+              key={post.objectId}
+              className="relative overflow-hidden rounded-lg h-[190px] group transition-all duration-300 shadow-md hover:shadow-xl"
+            >
+              <Link
+                href={`/blog/${post.slug}`}
+                className="block h-full focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-opacity-50 rounded-lg"
+                aria-labelledby={`side-post-title-${index}`}
+              >
+                <div className="relative h-full w-full">
+                  <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105 brightness-75"
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 text-white bg-gradient-to-t from-black/60 to-transparent">
+                    <span className="bg-white/80 text-black px-3 py-1 text-sm font-medium mb-3 w-fit rounded-md">
+                      {post.category.name || "Featured"}
+                    </span>
+                    <h3
+                      id={`side-post-title-${index}`}
+                      className="text-lg md:text-xl font-bold mb-2 text-shadow"
+                    >
+                      {post.title}
+                    </h3>
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-sm">{post.author?.name}</span>
+                      <time dateTime={post.created} className="text-sm">
+                        {post.created}
+                      </time>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </div>
-          {/* </Link> */}
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default Hero;
+export default FeaturedPosts;

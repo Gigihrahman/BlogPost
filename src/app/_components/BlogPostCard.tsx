@@ -1,4 +1,5 @@
 // components/BlogCard.tsx
+import { formatDate } from "@/lib/utils";
 import type { Blog } from "@/types/Blogs";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,8 +29,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         <p className="text-gray-600 text-base mb-4">{post.description}</p>
         {/* Footer: diletakkan di paling bawah dengan mt-auto */}
         <div className="mt-auto flex justify-between items-center text-sm text-gray-500">
-          <span>{post.author.name}</span>
-          <span>{post.created}</span>
+          <span>{post.author?.name}</span>
+          <span>{formatDate(post.created)}</span>
         </div>
       </div>
     </div>

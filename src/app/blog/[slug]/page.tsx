@@ -1,12 +1,25 @@
+import IncrementViews from "@/app/blog/[slug]/_components/increment";
+import Markdown from "@/components/Markdown";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { getPostBySlug } from "@/hook/api/Post/getPostBySlug";
 import { formatDate } from "@/lib/utils";
-import { Facebook, Linkedin, Twitter } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const slug = (await params).slug;
+  const desc = `Just read it ${slug} `;
+  return {
+    title: `${slug} Post`,
+    description: desc,
+  };
+}
 const BlogPostPage = async ({
   params,
 }: {
@@ -23,6 +36,7 @@ const BlogPostPage = async ({
   return (
     <div className="container py-10">
       <article className="mx-auto max-w-3xl">
+        <IncrementViews objectId={post.objectId} views={post.views} />
         {/* Breadcrumb */}
         <div className="mb-4 text-sm text-muted-foreground">
           <Link href="/" className="hover:text-primary">
@@ -79,26 +93,7 @@ const BlogPostPage = async ({
 
         {/* Post Content */}
         <div className="prose prose-slate dark:prose-invert max-w-none mb-8">
-          <p>{post.content}</p>
-        </div>
-
-        {/* Share Buttons */}
-        <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-2">Share this article</h3>
-          <div className="flex gap-2">
-            <Button variant="outline" size="icon">
-              <Facebook className="h-4 w-4" />
-              <span className="sr-only">Share on Facebook</span>
-            </Button>
-            <Button variant="outline" size="icon">
-              <Twitter className="h-4 w-4" />
-              <span className="sr-only">Share on Twitter</span>
-            </Button>
-            <Button variant="outline" size="icon">
-              <Linkedin className="h-4 w-4" />
-              <span className="sr-only">Share on LinkedIn</span>
-            </Button>
-          </div>
+          <Markdown content={post.content} />
         </div>
 
         {/* About the Author */}
@@ -114,6 +109,9 @@ const BlogPostPage = async ({
             />
             <div>
               <h4 className="text-xl font-medium">{post.author.name}</h4>
+              <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
+                {post.author.brief}
+              </p>
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "joysomecream-us.backendless.app",
+        hostname: "classicfear-us.backendless.app",
       },
     ],
   },

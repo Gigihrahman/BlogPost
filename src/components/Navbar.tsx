@@ -27,7 +27,7 @@ const Navbar = () => {
           </Button>
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/placeholder.svg?height=32&width=32"
+              src="/blogicon.webp"
               width={32}
               height={32}
               alt="Blog Logo"
@@ -65,36 +65,7 @@ const Navbar = () => {
             About
           </Link>
         </nav>
-
-        <div className="flex items-center gap-2">
-          {showSearch ? (
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="h-9 w-[200px] md:w-[300px] rounded-md pr-8"
-              />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-0 h-9 w-9"
-                onClick={() => setShowSearch(false)}
-              >
-                <X className="h-4 w-4" />
-                <span className="sr-only">Close search</span>
-              </Button>
-            </div>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setShowSearch(true)}
-            >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
-          )}
-        </div>
+        <div></div>
       </div>
 
       {/* Mobile Menu */}

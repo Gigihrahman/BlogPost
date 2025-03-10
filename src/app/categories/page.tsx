@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -7,10 +6,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getCategoryWithBlogs } from "@/hook/api/Category/getCategoryWithBlogs";
+import type { Metadata } from "next";
+import Link from "next/link";
+export const revalidate = 30;
+export async function generateMetadata(): Promise<Metadata> {
+  const desc = `Read Our blog select from categories `;
+  return {
+    title: `Categories Page`,
+    description: desc,
+  };
+}
 
 export default async function CategoriesPage() {
   const categories = await getCategoryWithBlogs();
-  console.log(categories);
+
   return (
     <div className="container mx-auto py-10">
       <h1 className="text-4xl font-bold mb-6">Categories</h1>
