@@ -1,22 +1,24 @@
-import BlogCard, { BlogCardProps } from "@/app/_components/BlogPostCard";
 import Hero from "@/app/_components/Hero";
-import { getPosts } from "@/hook/api/Post/getPost";
-import { NextPage } from "next";
-
+import { getPostsPopular } from "@/app/_api/getPopular";
+import BlogSection from "@/app/_components/BlogSection";
+import Jumbotron from "@/app/_components/Jumbotron";
+import { NextPage, type Metadata } from "next";
+export const revalidate = 30;
+export async function generateMetadata(): Promise<Metadata> {
+  const desc = `Read Our blog `;
+  return {
+    title: `Home Page`,
+    description: desc,
+  };
+}
 const Home: NextPage = async () => {
-  const blogPosts = await getPosts();
+  const popular = await getPostsPopular();
   return (
     <main className="container mx-auto px-4 py-8">
-      <Hero />
+      <Jumbotron />
+      <Hero posts={popular} />
 
-      <div className="py-4">
-        <h2 className="text-3xl font-bold mb-6">From the blog</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
-            <BlogCard key={post.objectId} post={post} />
-          ))}
-        </div>
-      </div>
+      <BlogSection />
     </main>
   );
 };

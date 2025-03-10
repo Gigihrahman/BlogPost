@@ -11,4 +11,5 @@ export type Blog = {
   category: Category;
   thumbnail: string;
   slug: string;
+  views: number;
 };
