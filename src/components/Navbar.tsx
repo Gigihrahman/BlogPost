@@ -1,16 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { Menu, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
 import Image from "next/image";
 import { useState } from "react";
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
