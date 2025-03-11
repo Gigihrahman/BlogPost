@@ -1,18 +1,15 @@
 "use client";
 
 import BlogCard from "@/app/_components/BlogPostCard";
-import PaginationSection from "@/components/PaginationSection";
 import useGetBlogs from "@/hook/api/blog/useGetBlog";
-import React, { useState } from "react";
 
-const LIMIT = 4;
+const LIMIT = 3;
 const BlogSection = () => {
-  const [page, setPage] = useState<number>(1);
   const { data: blogs, isPending } = useGetBlogs({
     title: "",
     category: "",
     limit: LIMIT,
-    offset: (page - 1) * LIMIT,
+    offset: 0,
   });
   return (
     <section>
@@ -24,13 +21,6 @@ const BlogSection = () => {
           ))}
         </div>
       </div>
-
-      <PaginationSection
-        count={blogs?.count || 0}
-        page={page}
-        setPage={setPage}
-        limit={LIMIT}
-      />
     </section>
   );
 };
