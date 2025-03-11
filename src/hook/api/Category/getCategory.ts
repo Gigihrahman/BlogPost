@@ -3,6 +3,6 @@ import type { Category } from "@/types/Category";
 
 export const getCategories = async () => {
   const { data } = await axiosInstance.get<Category[]>("/data/category");
-  console.log(data);
+
   return data;
 };

@@ -19,8 +19,6 @@ const useGetBlogs = (queries: GetBlogsQuery) => {
       if (category && category !== "all") {
         baseUrl = `/data/blog?pageSize=${limit}&offset=${offset}&where=%60title%60%20LIKE%20'%25${title}%25'%20AND%20%60category%60.%60name%60%20%3D%20'${category}'&sortBy=%60created%60%20desc&loadRelations=author%2Ccategory`;
         baseUrlCount = `/data/blog/count?pageSize=${limit}&offset=${offset}&where=%60title%60%20LIKE%20'%25${title}%25'%20AND%20%60category%60.%60name%60%20%3D%20'${category}'&sortBy=%60created%60%20desc&loadRelations=author%2Ccategory`;
-        console.log(baseUrl);
-        console.log(baseUrlCount);
       }
 
       const { data: blogs } = await axiosInstance.get<Blog[]>(baseUrl);
